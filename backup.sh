@@ -23,7 +23,12 @@ else
     exit 1
 fi
 
-site=$(docker ps --format '{{.Names}}' | grep _backup_ | cut -d'_' -f1) 
+if [ -z "$site" ]
+then
+  site=$(docker ps --format '{{.Names}}' | grep _backup_ | cut -d'_' -f1)
+  echo "Using default site: $site"
+fi
+
 filename=$site.$(date +%Y%m%d-%H%M%S).sql
 folder=$(date +%Y%m)
 
